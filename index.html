@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBLPS (test work)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'CustomFont', 'Permanent Marker', sans-serif;
+    color: white;
+  }
+
+  .bg-image {
+    position: fixed;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    
+-image: url('./bg.jpeg');
+    -size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    padding: 0 15px;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 400px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .btn {
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+  }
+
+  .btn:hover {
+    background-color: #8b0000;
+    transform: scale(1.05);
+  }
+
+  .screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .screen-content {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 600px;
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    z-index: 10;
+    padding: 10px;
+  }
+
+  .back-btn:hover {
+    color: #ffcccc;
+  }
+
+  a {
+    color: #ffaa00;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2.2rem;
+    }
+    .btn {
+      font-size: 1rem;
+    }
+    .screen-content {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-image"></div>
+<div class="overlay"></div>
+
+<div class="container">
+  <div class="menu" id="mainMenu">
+    <h1>DBLPS (test work)</h1>
+    <button class="btn" onclick="showScreen('screen1')">What is DBLPS?</button>
+    <button class="btn" onclick="showScreen('screen2')">How to install DBLPS?</button>
+    <button class="btn" onclick="showScreen('screen3')">Where i can read announcements about DBLPS?</button>
+  </div>
+
+  <div class="screen" id="screen1">
+    <button class="back-btn" onclick="showMainMenu()"><<< Back</button>
+    <div class="screen-content">
+      DBLPS — is an exclusive private server for the popular mobile game Dragon Ball Legends. It provides players with a unique environment featuring custom rates, unlocked content, and exciting new ways to experience battles outside the official servers.
+    </div>
+  </div>
+
+  <div class="screen" id="screen2">
+    <button class="back-btn" onclick="showMainMenu()"><<< Back</button>
+    <div class="screen-content">
+      The game is not finished yet, but it is currently in the final stages of development. Stay tuned for the official release!
+    </div>
+  </div>
+
+  <div class="screen" id="screen3">
+    <button class="back-btn" onclick="showMainMenu()"><<< Back</button>
+    <div class="screen-content">
+      All news and announcements about DBLPS will be posted on our Discord server.<br><br>
+      Join here: <a href="https://discord.gg/2ffE9KNgU" target="_blank">https://discord.gg/2ffE9KNgU</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showScreen(screenId) {
+    document.getElementById('mainMenu').style.opacity = '0';
+    document.getElementById('mainMenu').style.pointerEvents = 'none';
+    
+    setTimeout(() => {
+      document.getElementById(screenId).classList.add('active');
+    }, 300);
+  }
+
+  function showMainMenu() {
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => {
+      screen.classList.remove('active');
+    });
+    
+    setTimeout(() => {
+      document.getElementById('mainMenu').style.opacity = '1';
+      document.getElementById('mainMenu').style.pointerEvents = 'all';
+    }, 300);
+  }
+</script>
+</body>
+</html>);
+  }
+</script>
+</body>
+</html>enu').style.pointerEvents = 'all';
+    }, 300);
+  }
+</script>
+</body>
+</html>);
+  }
+</script>
+</body>
+</html>
